@@ -1,25 +1,29 @@
 # Assignment Submission
 
-## Project Selected: <Enter project name>
+## Project Selected: Express
 
 ## I. Introduction
-- Briefly introduce the purpose of this section, which is to provide a detailed description of two test cases in the selected open-source project.
+In this section, I will be giving a description and an analysis of two test cases from open-source project Express. The two test cases I've selected are app.route.js and app.engine.js
 
-## II. Test Case 1: [Name of Test Case]
+## II. Test Case 1: app.route.js
 ### A. Description
-- Provide a concise overview of what this test case is designed to verify or validate within the project.
+This test case is meant to validate various uses and functionalities of the app.route function
 ### B. Gherkin Syntax (if applicable)
-- If you choose to use Gherkin syntax, write the Gherkin scenario for this test case.
-### C. Test Steps
-- Enumerate the sequence of steps or actions involved in the test case.
-### D. Code Segments Under Test
-- Identify specific code segments or functions that are being tested in this case.
 
+### C. Test Steps
+1. Create an instance of app, create an api route "/foo" with a get method that sends "get, and a post method that sends "post". Send a post request to "/foo" and validate the response is "post".
+2. Create same endpoint as above with an all method that calls next(). Send a post request to "/foo" and validate the response is "post.
+3. Create an instance of app, create an api route "/:foo" with a get method that sends the name of the requested end point. Send a get request to "/:foo" and validate the response is "test".
+4. Create an instance of app, create an api route "/:foo" with no methods. Send a get request to "/:foo" and validate the response is 404.
+### D. Code Segments Under Test
 ```Java
-// Enter code
+// express();
+// app.route();
+// request();
+// res.send();
 ```
 ### E. Initial State
-- Describe the initial state or conditions of the system or component before executing the test.
+1. Uninstantiated Express app
 ### F. Transition
 - Explain the actions or events that trigger a change in the system's state.
 ### G. Expected State
