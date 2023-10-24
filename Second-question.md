@@ -1,55 +1,31 @@
-## Project Selected: <Enter project name>
-
+## Project Selected: Express
 ## I. Introduction
-- Provide an overview of the analysis, indicating the goal of describing the types of testing used in the selected open-source project and explaining the rationale behind their choice.
+The goal behind analyzing the types of testing used in an open-source project is to show how much more effective an efficient it is to use those software testing techniques as compared to manual testing, particularly when dealing with larger programs. It also helps in learning to read source code and grow in our abilities to realize the functionality of a piece of software without actually having to run it. Ultimately, we will get to see what traditional software testing techniques look like. For Express specifically, there is a wide variety of test classes for many different behaviors and functionality within the system. Discussions I read have also talked about the important of growing and maintaining a suite of test cases to prevent regression in a project, trying to avoid breaking previously functional components by adding or modifying other components.
 
 ## II. Types of Testing in the Project
 ### A. Unit Testing
-- Describe the role and purpose of unit testing in the project.
-- Identify specific components or modules that are subjected to unit testing.
-- Mention how unit tests are executed and the tools or frameworks used.
+Unit testing is useful for testing the individual components of a program without having to use the context of the entire system. This type of testing is particularly useful for Express, as there are many functions that operate independently of the other components. One such example of this is found in test/app.route.js. The test creates multiple api endpoints "/foo", and tests whether or not they were created properly. It tests if "/foo" responds as a post when created as a post, as well as tests whether the naming conventions behave as expected. It makes sense to use unit testing for these scenarios, as they simply interact with the user at creation and use, and don't have to interact with other components of the system.
 
 ### B. Integration Testing
-- Explain the importance of integration testing in the context of the project.
-- Identify the interactions between different modules, services, or components that are tested.
-- Highlight the methods used for conducting integration tests and tools employed.
+Integration testing is useful for testing interactions between multiple components of a program. While unit testing makes sure the components work individually, integration testing validates the interactions. An example of this within Express is in test/app.response.js. The test creates an instance of the app, set the shout() function for the app response, and then calls the shout() function and validates the result. More specifically, the test sets the shout() function to set the input string to uppercase, and then the shout() function is called with the string "hey" as input, validating that the output is "HEY". This is important for making sure that components interact correctly with one another. One component sets the function for the response, and another component uses the response, testing whether or not the function is being updated and passed through the system as expected.
 
 ### C. UI (User Interface) Testing
-- Describe the significance of UI testing in the project, especially if it's a web application or software with a graphical user interface.
-- Explain which aspects of the user interface are tested (e.g., functionality, usability, responsiveness).
-- Mention the testing frameworks, tools, or automation scripts used for UI testing.
-
-### D. Other Types of Testing (if applicable)
-- If there are additional types of testing beyond unit, integration, and UI testing, outline and briefly explain them.
-- Provide insights into why these specific types of testing are relevant to the project's goals.
+User interface testing is important for many things, but most importantly user validation in Express. An example of this is in test/app.engine.js where an instance of the app is created, the views and engine are instantiated, and then a webpage is simulated using a manually set local user. The test is validated by checking that the simulated webpage contains an html paragraph with the user name in it. User validation is very important for application with a front end, as not every user is meant to have access to the same information, users have varying roles. A manager should have more access than a customer in pieces of software, and validating that the user interface can be dynamically updated makes displaying authorized information to the user based on local data much more efficient.
 
 ## III. Reasons for Choosing These Testing Types
-- Discuss the rationale behind selecting these particular testing types for the project.
-- Consider the project's goals, technology stack, and unique requirements when explaining the choice of testing methods.
-- Highlight the benefits and advantages of using these testing types in this context.
+Unit testing is very effective for testing independent components. Express has a ton of this independent components, so it makes sense to use unit testing to cover multiple scenarios for these simpler interactions like creating an endpoint or calling that endpoint. Integration testing is very effective for testing the interactions between components. When working with an api, there is a lot of data transfer that occurs, so it is important to make sure that data is being handled and transferred as expected. User interface testing is effective for ensuring dynamically updating front end information, which is necessary for most software today. Validating and updating access based on local user data is something most software today does, and Express provides that capability, meaning it is important that it is tested effectively.
 
 ## 2. Test Data Generation
 ### A. Static Test Data
-- Explain if and how static test data is used in the project.
-- Provide examples of scenarios where static test data is employed.
+An example of static test data in Express is in test/app.route.js for unit testing. There are hardcoded endpoints that are created and validated, with no changes made to them. Another example of this is in the user inteface testing where the user name "Tobi" is hardcoded, and validated as "Tobi" after being simulated in a webpage.
+
 ### B. Dynamic Test Data
-- Explain if and how dynamic test data is used in the project.
-- Provide examples of scenarios where dynamic test data is generated.
+An example of dynamic test data in Express is in test/app.response.js for integration testing. An app is created, and then the response shout() function is updated, and the string "hey" is passed through and updated, and then validated at the end of the test. The dynamic data is used to ensure the correct logic is being performed on the input data.
 
 ## 3. Test Doubles
-- Identify and explain the use of test doubles (e.g., mocks, stubs, fakes) in the project.
-- Specify the specific components, functions, or cases where test doubles are applied.
-- Discuss the purpose of using these test doubles in the testing strategy.
+An example of where test doubles are used in Express is in test/app.engine.js for user interface testing. Instead of actually rendering and displaying a webpage and validating from there, the test creates an instance of the app, and then simulates the webpage rendering from there. By simulating, I mean that the backend logic and operations are performed, but the page itself is never rendered. This still allows for data validation, but is more efficient as a webpage isn't loaded.
 
 ## 4. Discussion on Testing Practices
-<!-- 
-To find discussions on testing strategy in a GitHub repository, you can follow these steps:
+https://github.com/expressjs/express/issues/3908
 
-Visit the GitHub repository for the project you're interested in.
-Look for the "Issues" tab on the repository's page.
-Use the search bar within the Issues tab to search for terms related to testing, such as "testing strategy," "test cases," or "test automation."
--->
-- Investigate any discussions related to testing practices within the project.
-- Give a link to the Github PR or issue
-- Summarize key points or insights from these discussions.
-- Offer your interpretation of how the project's testing practices align with industry standards or best practices.
+In this issue, a discussion is had regarding mocking an IP address for testing. Instead of hardcoding values and performing tests from there (dynamically), they opt to use test doubles to present a more realistic test case, as mocking gives a better representation of how the software will actually be used comprehensively instead of just testing individual pieces. Given the circumstance of the testing (wanting to test the request class), it makes more sense to use mocking as it lends itself to integration testing which seems more appropriate for the tests being conducted. The goal appears to be validating the interactions between parts of the class rather than validating the indvidual components of the class separately. At points in the discussion, solutions that don't make use of test doubles are presented, but the OP stands that it is important to do so as it will be more representative of actual use and provide more accurate results in terms of validating the functionality of the program.
